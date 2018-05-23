@@ -10,7 +10,7 @@ from s2clientprotocol import sc2api_pb2
 import sc2common.containers as cn
 import os
 
-from sc2gamemgr.gameConstants import *
+from sc2gameLobby.gameConstants import *
 
 
 ################################################################################
