@@ -10,18 +10,47 @@ from s2clientprotocol import sc2api_pb2
 import sc2common.containers as cn
 import os
 
-from sc2gameLobby.gameConstants import *
-
-
 ################################################################################
-# AI application game mechanics
-POISON_PILL             = Exception # value that causes subprocesses to terminate
-UNDEFINED               = cn.MultiType("UNDEFINED", -1)
-EXPO_SELECT = {
+# game expansions
+WINGS_OF_LIBERTY        = "Wings_Of_Liberty"
+HEART_OF_THE_SWARM      = "Heart_Of_The_Swarm"
+LEGACY_OF_THE_VOID      = "Legacy_Of_The_Void"
+DEFAULT_EXPANSION       = LEGACY_OF_THE_VOID
+EXPO_SELECT = { # shorthand shortcut
     "lotv"  : LEGACY_OF_THE_VOID,
     "hots"  : HEART_OF_THE_SWARM,
     "wol"   : WINGS_OF_LIBERTY,
 }
+################################################################################
+# in-game definitions: bot difficulties
+VERYEASY    = "veryeasy"
+EASY        = "easy"
+MEDIUM      = "medium"
+MEDIUMHARD  = "mediumhard"
+HARD        = "hard"
+HARDER      = "harder"
+VERYHARD    = "veryhard"
+CHEATVISION = "cheatvision"
+CHEATMONEY  = "cheatmoney"
+CHEATINSANE = "cheatinsane"
+################################################################################
+# in-game definitions: player types
+COMPUTER    = "computer"
+OBSERVER    = "observer"
+PARTICIPANT = "agent"
+################################################################################
+# description how a player's units are controlled
+HUMAN       = "human"   # human agent that plays the game in traditional manner
+BOT         = "bot"     # agent with pre-programmed actions/responses/decisions
+AI          = "ai"      # agent with decision making based on machine-learning policies
+ARCHON      = "archon"  # multiple players simultaneously playing as the same player 
+################################################################################
+# Races
+PROTOSS     = "protoss"
+ZERG        = "zerg"
+TERRAN      = "terran"
+NEUTRAL     = "neutral" # NPC only, non-controllable by any (e.g. map features)
+RANDOM      = "random"  # only valid as a selection race, not an actual race
 ################################################################################
 # starcraft2 game mechanics (immutable, defined by the game/version itself)
 LARVA_SPAWN_RATE        = 247 # gameloops until a new larva appears, provided adequate conditions
@@ -35,6 +64,14 @@ START_RESOURCES         = (50, 0) # mineral/vespene
 SUPPLY_CAP              = 200
 WORKER_RADIUS           = 0.375
 WORKER_SPEED            = 2.8125/SPEED_NORMAL # 2.8125 is hard defined in techTree game mechanics
+################################################################################
+# match results
+RESULT_VICTORY          = sc2api_pb2._RESULT.values_by_name[ "Victory" ].number # 1
+RESULT_DEFEAT           = sc2api_pb2._RESULT.values_by_name[ "Defeat"  ].number # 2
+RESULT_TIE              = sc2api_pb2._RESULT.values_by_name[   "Tie"   ].number # 3
+RESULT_UNDECIDED        = sc2api_pb2._RESULT.values_by_name["Undecided"].number # 4
+RESULT_CRASH            = 5
+RESULT_DISCONNECT       = 6
 ################################################################################
 # standard durations, assuming the 'feel' of a game speed
                                          # gameloops/sec * seconds (rounded up)
@@ -77,6 +114,32 @@ YIELD_MINERAL           = 5
 YIELD_MINERAL_RICH      = 8
 YIELD_VESPENE           = 4
 YIELD_VESPENE_RICH      = 5
+################################################################################
+# game match modes
+MODE_1V1                = "1v1"
+MODE_1V1_BOT            = "1v1bot"
+MODE_1VN_BOT            = "1vNbot"
+MODE_2V2                = "2v2"
+MODE_3V3                = "3v3"
+MODE_4V4                = "4v4"
+MODE_NVN                = "NvN"
+MODE_NVN_BOT            = "NvNbot"
+MODE_FFA                = "FFA"
+MODE_FFA_BOT            = "FFAbot"
+MODE_UNKNOWN            = "unknown"
+################################################################################
+# game web setup
+DEFAULT_SERVER_PORT     = 7801
+GAME_INIT               = "game_state"
+GAME_LOAD               = "load"
+GAME_PLAY               = "play"
+GAME_STOP               = "stop"
+
+
+################################################################################
+# AI application game mechanics
+POISON_PILL             = Exception # value that causes subprocesses to terminate
+UNDEFINED               = cn.MultiType("UNDEFINED", -1)
 ################################################################################
 # types of things commanders are able to interpret from the game
 ABILITY_ID              = "ability_id"
@@ -194,5 +257,5 @@ MOVE_COLOSSUS           = cn.MultiType("Colossus"   ,  5   )
 #WASTE_THRESHOLD         = 0.00 # => 20 workers/base  gather nodes that have non-trivial waste
 WASTE_THRESHOLD         = 0.40 # => 18 workers/base  only gather the most wasteful nodes (> 3.2 away)
 #WASTE_THRESHOLD         = 0.99 # => 16 workers/base  don't gather unless worker is fully utilized
-PATH_DATA_MAPS          = os.sep.join(__file__.split(os.sep)[:-1] + ["dataMaps"])
+#PATH_DATA_MAPS          = os.sep.join(__file__.split(os.sep)[:-1] + ["dataMaps"])
 
