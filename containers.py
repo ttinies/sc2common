@@ -3,12 +3,59 @@ from __future__ import absolute_import
 from __future__ import division       # python 2/3 compatibility
 from __future__ import print_function # python 2/3 compatibility
 
-from six import iteritems # python 2/3 compatibility
+from six import iteritems, itervalues # python 2/3 compatibility
 
 import math
 import numbers
 import re
 
+
+################################################################################
+class RestrictedType(object):
+    """USAGE: subclass this and redefine ALLOWED_TYPES to the limited type values
+    NOTE: if ALLOWED_TYPES is a dict, its values maps to sc2clientprotocol
+          internal values."""
+    ############################################################################
+    ALLOWED_TYPES = [] # unless specifically defined in a subclass, there are no restricted values
+    ############################################################################
+    def __init__(self, pType):
+        if isinstance(pType, type(self)):   self.type = pType.type
+        else:                               self.type = pType
+    ############################################################################
+    def __setattr__(self, key, value):
+        """specifically restrict key and value as defined by ALLOWED_TYPES"""
+        if key != "type":
+            raise KeyError("given key '%s' is not allowed.  Expected: 'type'"%(key))
+        if value not in type(self).ALLOWED_TYPES:
+            result = [k for k,v in iteritems(type(self).ALLOWED_TYPES) if value == v]
+            if len(result) != 1:
+                raise ValueError("given value '%s' (%s) is not an player type value."\
+                    "Allowed: %s"%(value, type(value), list(type(self).ALLOWED_TYPES)))
+            value = result.pop() # allow use the key value, not the value-value (yay wording)
+        super(RestrictedType, self).__setattr__(key, value)
+    ############################################################################
+    def __eq__(self, other):
+        if self.type == other:                      return True
+        if not isinstance(other, RestrictedType):   return False
+        return self.type == other.type
+    def __ne__(self, other):
+        return not (self == other)
+    ############################################################################
+    def __str__(self): return self.__repr__()
+    def __repr__(self):
+        return "<%s %s>"%(self.__class__.__name__, self.type)
+    ############################################################################
+    def __call__(self, newValue):
+        """override this functionality to UPDATE internal type"""
+        self.type = newValue
+        return self.type
+    ############################################################################
+    def gameValue(self):
+        """identify the correpsonding internal SC2 game value for self.type's value""" 
+        try:
+            return (type(self).ALLOWED_TYPES)[self.type]
+        except Exception: pass
+        return None # if ALLOWED_TYPES is not a dict, there is no-internal game value mapping defined
 
 
 ################################################################################
