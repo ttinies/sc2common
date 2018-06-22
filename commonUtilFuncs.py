@@ -25,16 +25,6 @@ def getName(target):
 
 
 ################################################################################
-def standardizeMapName(mapName):
-    """pretty-fy the name for pysc2 map lookup"""
-    newName = os.path.basename(mapName)
-    newName = newName.split(".")[0]
-    newName = newName.split("(")[0]
-    newName = re.sub("[LTE]+$", "", newName)
-    return re.sub(' ', '', newName, flags=re.UNICODE)
-
-
-################################################################################
 def determineWaypoints(origin, destination, movementStrategy):
     """calculate the minimum how to get from A to B via means C"""
     raise(NotImplementedError)
