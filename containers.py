@@ -288,8 +288,10 @@ class Possessions(dict):
     class DuplicateError(Exception): pass
     class MissingError(Exception): pass
     ############################################################################
-    def __init__(self, *args):
-        super(dict, self).__init__(args) # each entity must have a hashable and unique itemID
+    def __init__(self, *args, **kwargs):
+        super(dict, self).__init__() # each entity must have a hashable and unique itemID
+        map(self.update, args) # each arg is itself a dictionary or Possessions
+        self.update(kwargs) # all kwargs override any previously specified arg value
         if not args:
             self.new    = [] # temporarily identify units that are new
             self.dead   = [] # temporarily identify units that are destroyed
