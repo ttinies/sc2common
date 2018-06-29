@@ -6,6 +6,7 @@ from __future__ import print_function # python 2/3 compatibility
 from six import iteritems # python 2/3 compatibility
 
 from sc2common.containers import MapPoint
+from sc2common import constants as c
 from builtins import str as text # python 2/3 compatibility
 
 import math
@@ -240,11 +241,10 @@ def Dumper(obj, indent=0, increase=2, encoding='utf-8'):
 
 
 ################################################################################
-def convertSecondsToLoops(value):
+def convertSecondsToLoops(value, gamespeed=c.SPEED_NORMAL):
     #return int(math.ceil(value*22.4))
-    #conversionFactor = 22.4 # faster
-    conversionFactor = 16.0 # normal
-    return int(round(value*conversionFactor +0.1))
+    conversionFactor = gamespeed
+    return int(round(value*conversionFactor +0.1)) # loop value is a pure integer
 
 
 ################################################################################
