@@ -53,6 +53,7 @@ class ActualRaces(RestrictedType):
         c.PROTOSS       : races.Protoss     ,
         c.ZERG          : races.Zerg        ,
         c.TERRAN        : races.Terran      ,
+        None            : None              , # the actual race isn't yet known
     }
 
 
