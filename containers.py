@@ -40,6 +40,9 @@ class RestrictedType(object):
         return self.type == other.type
     def __ne__(self, other):
         return not (self == other)
+    def __lt__(self, other):
+        """allow basic sorting"""
+        return self.gameValue() < other.gameValue()
     ############################################################################
     def __str__(self): return self.__repr__()
     def __repr__(self):
@@ -79,6 +82,10 @@ class MultiType(object):
     def __ne__(self, other):
         return not self.__eq__(other)
     ############################################################################
+    def __lt__(self, other):
+        """allow basic sorting"""
+        return self.code < other.code
+    ############################################################################
     def __int__(self):
         """allow automatic conversion to code when necessary"""
         return self.code
@@ -105,6 +112,11 @@ class MapPoint(object):
         if not hasattr(point, "y"):         return False
         if not hasattr(point, "z") and z:   return False
         return point.x==self.x and point.y==self.y and point.z==self.z
+    ############################################################################
+    def __lt__(self, other):
+        """allow basic sorting based on which point is closer to the origin"""
+        origin = MapPoint(0,0)
+        return self.direct2dDistance(origin) < other.direct2dDistance(origin)
     ############################################################################
     def __add__(self, point):
         ret = self.__class__(self.x, self.y, self.z)
@@ -223,12 +235,12 @@ class Vector(MapPoint):
         self.z *= scalar
         return self
     ############################################################################
-    def __div__(self, scalar):
+    def __truediv__(self, scalar):
         ret = self.__class__(self.x, self.y, self.z)
         ret /= scalar
         return ret
     ############################################################################
-    def __idiv__(self, scalar):
+    def __itruediv__(self, scalar):
         self.x /= scalar
         self.y /= scalar
         self.z /= scalar
