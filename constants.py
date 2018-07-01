@@ -134,4 +134,7 @@ GAME_INIT               = "game_state"
 GAME_LOAD               = "load"
 GAME_PLAY               = "play"
 GAME_STOP               = "stop"
+################################################################################
+# unit properties
+INVULNERABLE_HEALTH     = 10000
 
