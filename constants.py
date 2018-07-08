@@ -53,7 +53,6 @@ NEUTRAL     = "neutral" # NPC only, non-controllable by any (e.g. map features)
 RANDOM      = "random"  # only valid as a selection race, not an actual race
 ################################################################################
 # starcraft2 game mechanics (immutable, defined by the game/version itself)
-LARVA_SPAWN_RATE        = 247 # gameloops until a new larva appears, provided adequate conditions
 SPEED_FASTER            = 22.4
 SPEED_FAST              = 19.2
 SPEED_NORMAL            = 16.0
@@ -62,8 +61,6 @@ SPEED_SLOWER            =  9.6
 SPEED_ACTUAL            = SPEED_FASTER
 START_RESOURCES         = (50, 0) # mineral/vespene
 SUPPLY_CAP              = 200
-WORKER_RADIUS           = 0.375
-WORKER_SPEED            = 2.8125/SPEED_NORMAL # 2.8125 is hard defined in techTree game mechanics
 ################################################################################
 # match results
 RESULT_VICTORY          = sc2api_pb2._RESULT.values_by_name[ "Victory" ].number # 1
@@ -129,6 +126,7 @@ MODE_FFA_BOT            = "FFAbot"
 MODE_UNKNOWN            = "unknown"
 ################################################################################
 # game web setup
+LOCALHOST               = "127.0.0.1"
 DEFAULT_SERVER_PORT     = 7801
 GAME_INIT               = "game_state"
 GAME_LOAD               = "load"
