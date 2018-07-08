@@ -62,6 +62,52 @@ class RestrictedType(object):
 
 
 ################################################################################
+class pySC2protocolObj(object):
+    """convert sc2clientprotocol object into py obj with all attributes defined"""
+    ############################################################################
+    def __init__(self, protocolAttrNames, sc2protData=None):
+        ########################################################################
+        def getObjAttr(obj, name):
+            if obj.HasField(name):
+                return getattr(obj, name)
+            return 0
+        ########################################################################
+        if isinstance(protocolAttrNames, pySC2protocolObj): # copy constructor
+            for k,v in iteritems(protocolAttrNames.__dict__):
+                setattr(self, k, v)
+            return
+        for attrName in protocolAttrNames:
+            setattr(self, attrName, getObjAttr(sc2protData,attrName))
+    ############################################################################
+    def __iter__(self):
+        return iteritems(self.__dict__)
+    ############################################################################
+    def __contains__(self, value):
+        return value in self.__dict__.keys()
+    ############################################################################
+    def __str__(self):
+        """convert object into dict appearance"""
+        return "{%s}"%(", ".join([ "%s:%s"%kvTup for kvTup in iteritems(self.__dict__) ]))
+    ############################################################################
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__): return False
+        for k,v in iter(self):
+            if k not in other:          return False # verify key is contained in other
+            if v != getattr(other,k):   return False # verify other's key/value matches
+        for k,v in iter(other):
+            if k not in self:           return False # other has an attribute self does note
+        return True
+    ############################################################################
+    @property
+    def allowAutocast(self):
+        return bool( getattr(self, "allow_autocast", False) )
+    ############################################################################
+    @property
+    def allowMinimap(self):
+        return bool ( getattr(self, "allow_minimap", False) )
+
+
+################################################################################
 class MultiType(object):
     """a simple class that allows comparison against both name and code value"""
     ############################################################################
