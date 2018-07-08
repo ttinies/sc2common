@@ -26,18 +26,6 @@ def getName(target):
 
 
 ################################################################################
-def determineWaypoints(origin, destination, movementStrategy):
-    """calculate the minimum how to get from A to B via means C"""
-    raise(NotImplementedError)
-
-
-################################################################################
-def pathDistance( waypointSequence ):
-    """given a determined path, determine the distance to travel"""
-    raise(NotImplementedError)
-
-
-################################################################################
 def relateObjectLocs(obj, entities, selectF):
     """calculate the minimum distance to reach any iterable of entities with a loc"""
     #if obj in entities: return 0 # is already one of the entities
@@ -135,78 +123,6 @@ def outsideElipse(target, centerPoint, radX, radY):
     if dFull <= r:
         print("%s   %s > %s"%(target, dFull, r))
     return dFull > r
-
-
-################################################################################
-def objDistanceElipse(p1, r1, p2, r2):
-    """calculates the distance between two elipses p1, having x,y radius r1, and
-       p2, having x,y radius r2."""
-    pDist   = p1-p2
-    bigX    = pDist.x # total distance in X direction
-    bigY    = pDist.y # total distance in Y direction
-    theta1  = math.atan2(bigX, bigY) # angle drawn by X,Y, viewed from p1
-    theta2  = math.atan2(bigY, bigX) # angle drawn by X,Y, viewed from p2
-    # NOTE: theta1 + theta2 must equal pi/2 owing to the drawn right angle by orthogonal bigX and bigY
-    #print("%.3f + %.3f = %.3f (%.3f)"%(theta1, theta2, theta1+theta2, math.pi/2.0))
-    r1 = ( 1.0 / (  (math.sin(theta1)/r1.x)**2 + (math.cos(theta1)/r1.y)**2  ) )**0.5 # calculate radius at correct angle
-    r2 = ( 1.0 / (  (math.sin(theta2)/r2.x)**2 + (math.cos(theta2)/r2.y)**2  ) )**0.5 # calculate radius at correct angle
-    #print(r1)
-    #print(r2)
-    D = math.hypot(bigX, bigY) # pythagorean theorem calculates distance between two elipse center points
-    #print("D: %.3f"%(D))
-     # actual distance is the distance between center points minus the radii of both objects at the correct angles
-    return max(0.0, D - r1 -r2) # the objects are touching (if zero) or overlapping (if negative)
-
-
-################################################################################
-def resourceDistance(node, obj, radius=None, resourceMinDistance=3.0):
-    """define the game distance between a resource and an object""" 
-    if   node.isMineralNode:    rX,rY = (1.0,0.5) # mineral nodes are 2x1
-    elif node.isVespeneNode:    rX,rY = (1.5,1.5) # vespene nodes are 3x3
-    else: raise(ValueError, "encountered UnitType which isn't a resource node: %s"%node)
-    if radius:
-        loc = obj
-        rad = radius
-    else:
-        loc = obj.loc
-        rad = obj.radius
-    objLeft   = loc.x - rad
-    objRight  = loc.x + rad
-    objBottm  = loc.y - rad
-    objTop    = loc.y + rad
-    objBL     = MapPoint(objLeft , objBottm)
-    objBR     = MapPoint(objRight, objBottm)
-    objTL     = MapPoint(objLeft , objTop  )
-    objTR     = MapPoint(objRight, objTop  )
-    nodeLeft  = node.loc.x - rX
-    nodeRight = node.loc.x + rX
-    nodeBottm = node.loc.y - rY
-    nodeTop   = node.loc.y + rY
-    nodeBL    = MapPoint(nodeLeft , nodeBottm)
-    nodeBR    = MapPoint(nodeRight, nodeBottm)
-    nodeTL    = MapPoint(nodeLeft , nodeTop  )
-    nodeTR    = MapPoint(nodeRight, nodeTop  )
-    xyDist = None
-    if   objRight < nodeLeft  and objTop   < nodeBottm: xyDist=objTR.direct2dDistance(nodeBL) # quadrant I
-    elif objRight < nodeLeft  and objBottm > nodeTop  : xyDist=objBR.direct2dDistance(nodeTL) # quadrant IV
-    elif objLeft  > nodeRight and objBottm > nodeTop  : xyDist=objBL.direct2dDistance(nodeTR) # quadrant III
-    elif objLeft  > nodeRight and objTop   < nodeBottm: xyDist=objTL.direct2dDistance(nodeBR) # quadrant II
-    #print("            %s distances   x:%.3f  y:%.3f  xy:%s"%(node, xMin, yMin, xyDis))
-    if xyDist: # only consider xyDistance when measuring from corners (per quadrant sections)
-        #NOTE: strangely, the exact distance isn't the minimum distance measurement when working diagonally
-        if xyDist < rad: return 0.0 # corner-corner distance was not at least resourceMinDistance (objects touch/overlap)
-        return xyDist
-    else:
-        xMin = min( # always measure the sides that are closest
-            abs(objLeft   - nodeRight),
-            abs(objRight  - nodeLeft ))
-        yMin = min( # always measure the sides that are closest
-            abs(objTop    - nodeBottm),
-            abs(objBottm  - nodeTop  ))
-        if not any([ term>=resourceMinDistance for term in [xMin, yMin] ]): return 0.0
-        if   xMin < resourceMinDistance:    return yMin
-        elif yMin < resourceMinDistance:    return xMin
-        else:                               return min(xMin,yMin)
 
 
 ################################################################################
