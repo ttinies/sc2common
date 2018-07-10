@@ -3,8 +3,6 @@ from __future__ import absolute_import
 from __future__ import division       # python 2/3 compatibility
 from __future__ import print_function # python 2/3 compatibility
 
-from six import iteritems # python 2/3 compatibility
-
 from sc2common.containers import MapPoint
 from sc2common import constants as c
 from builtins import str as text # python 2/3 compatibility
@@ -136,7 +134,7 @@ def Dumper(obj, indent=0, increase=2, encoding='utf-8'):
     ##############################################################################
     try:
         if isinstance(obj, dict):
-            for k,v in iteritems(obj):
+            for k,v in obj.items():
                 if hasattr(v, "__iter__"):
                     print("%s%s"%(" "*(indent), p(k)))
                     Dumper(v, indent=indent+increase, increase=increase)
