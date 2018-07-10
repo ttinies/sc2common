@@ -137,7 +137,8 @@ class MultiType(object):
         return self.code
     ############################################################################
     def __long__(self):
-        return long(self.code)
+        try:    return long(self.code) # python2
+        except: return  int(self.code) # python3
 
 
 ################################################################################
@@ -299,8 +300,8 @@ class Cost(object):
     ############################################################################
     def __init__(self, mins=0, gas=0, supply=0, energy=0, time=0, cooldown=0):
         if isinstance(mins, Cost):
-            self.mineral    = mins.mins
-            self.vespene    = mins.gas
+            self.mineral    = mins.mineral
+            self.vespene    = mins.vespene
             self.supply     = mins.supply
             self.energy     = mins.energy
             self.time       = mins.time
