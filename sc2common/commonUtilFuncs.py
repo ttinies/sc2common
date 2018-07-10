@@ -30,7 +30,7 @@ def relateObjectLocs(obj, entities, selectF):
     try:                    obj = obj.loc # get object's location, if it has one
     except AttributeError:  pass # assume obj is already a MapPoint
     try:                    func = obj.direct2dDistance # assume obj is a MapPoint
-    except AttributeError:  raise(ValueError, "object %s (%s) does not possess and is not a %s"%(obj, type(obj), MapPoint))
+    except AttributeError:  raise ValueError("object %s (%s) does not possess and is not a %s"%(obj, type(obj), MapPoint))
     try:                    return selectF([(func(b.loc), b) for b in entities])
     except AttributeError:  return selectF([(func(b)    , b) for b in entities])
 
@@ -44,7 +44,7 @@ def maxDistance(obj, entities): return relateObjectLocs(obj, entities, max)
 def convertToMapPoint(loc):
     if type(loc) in [list,tuple] and len(loc)==2:   return MapPoint(loc[0], loc[1])
     if hasattr(loc, "x") and hasattr(loc, "y"):     return MapPoint(loc.x, loc.y)
-    raise(ValueError, "passed location type %s which is invalid.  Given value: %s"%(type(loc), loc))
+    raise ValueError("passed location type %s which is invalid.  Given value: %s"%(type(loc), loc))
 
 
 ################################################################################
@@ -124,13 +124,13 @@ def outsideElipse(target, centerPoint, radX, radY):
 
 
 ################################################################################
-def Dumper(obj, indent=0, increase=2, encoding='utf-8'):
+def Dumper(obj, indent=0, increase=4, encoding='utf-8'):
     """appropriately view a given dict/list/tuple/object data structure"""
     ##############################################################################
     def p(given):
         """ensure proper decoding from unicode, if necessary"""
-        if isinstance(given, unicode):    return given.encode(encoding)
-        else:                             return given
+        if isinstance(given, text): return given.encode(encoding)
+        else:                       return given
     ##############################################################################
     try:
         if isinstance(obj, dict):
@@ -144,8 +144,11 @@ def Dumper(obj, indent=0, increase=2, encoding='utf-8'):
                 Dumper(o, indent=indent, increase=increase) # didn't print anything this go-round
         elif isinstance(obj, tuple):
             print("%s%s"%(" "*(indent), p(obj[0])))
-            Dumper(obj[1], indent=indent+increase, increase=increase)
-        elif isinstance(obj, unicode):
+            next = list(obj)[1:]
+            if len(next) == 1:  next = next[0]
+            else:               next = tuple(next)
+            Dumper(next, indent=indent+increase, increase=increase)
+        elif isinstance(obj, text):
             print("%s%s"%(" "*(indent), p(obj))) # universally convert back to str for printing
         elif obj!=None:
             print("%s%s"%(" "*(indent), p(obj)))
