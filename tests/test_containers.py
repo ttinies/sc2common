@@ -129,6 +129,9 @@ def test_Vector():
     assert repr(z)     == "<Vector |13.6| @ 1.8693rad ( -4.0, 13.0,  0.0)>"
     z /= w.magnitude()
     assert repr(z / 0.5) == "<Vector |1.6| @ 1.8693rad ( -0.5,  1.5,  0.0)>"
+    assert bool(x.__div__(3))
+    y.__idiv__(2)
+    assert bool(y)
 
 
 def test_Cost():

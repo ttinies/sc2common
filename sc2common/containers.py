@@ -282,11 +282,13 @@ class Vector(MapPoint):
         self.z *= scalar
         return self
     ############################################################################
+    def __div__(self, scalar): return self.__truediv__(scalar) # python 2.7 support
     def __truediv__(self, scalar):
         ret = self.__class__(self.x, self.y, self.z)
         ret /= scalar
         return ret
     ############################################################################
+    def __div__(self, scalar): return self.__itruediv__(scalar) # python 2.7 support
     def __itruediv__(self, scalar):
         self.x /= scalar
         self.y /= scalar
