@@ -42,6 +42,8 @@ def test_MapPoint():
     d = cn.MapPoint(33, 26)
     e = cn.MapPoint(84,  6)
     f = cn.MapPoint(16, 19)
+    assert d.midPoint(b) == cn.MapPoint(29.0, 29.0)
+    assert b.midPoint(d) == cn.MapPoint(29.0, 29.0)
     g = a + b
     h = cn.MapPoint( 0,  0)
     e.assignIntoInt(h)
@@ -100,6 +102,12 @@ def test_MapPoint():
     genericFloatCompare( i.angle2d(), 0.244979 )
     genericFloatCompare( j.angle2d(), 0.752077 )
     assert str(a) == "( 25.0, 32.0,  0.0)"
+    assert a.midPoint(b) == cn.MapPoint(18.5, 64.5)
+    genericFloatCompare( cn.MapPoint( 0.0, -3.5).angle2d(), 4.712389)
+    genericFloatCompare( cn.MapPoint( 0.0,  5.0).angle2d(), 1.570796)
+    genericFloatCompare( cn.MapPoint( 0.0,  0.0).angle2d(), 0.000000)
+    genericFloatCompare( cn.MapPoint( 8.5,  0.0).angle2d(), 0.000000)
+    genericFloatCompare( cn.MapPoint( 8.5, -2.5).angle2d(), 5.997134)
 
 
 def test_Vector():

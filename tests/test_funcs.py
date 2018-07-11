@@ -174,4 +174,3 @@ def test_quadraticSolver():
     assert cu.quadraticSolver(-4, 8, 0) == [0.0, 2.0]
     assert cu.quadraticSolver(-5, 0, 5) == [-1.0, 1.0]
     
-test_gridSnap()

@@ -38,8 +38,8 @@ def test_PlayerControls():
 
 
 def test_PlayerDesigns():
-    y = types.PlayerDesigns
-    try:
+    y = types.PlayerDesigns(c.AI)
+    try: # list-style RestrictiedTypes do not allow gameValue() calls
         y.gameValue()
         assert False
     except Exception: assert True
@@ -53,6 +53,8 @@ def test_ComputerDifficulties():
     assert x != z
     assert x != y
     assert x.gameValue() == y.gameValue() # SC2 proto code can still match
+    z.type = types.sc_pb.CheatVision
+    assert z == c.CHEATVISION
 
 
 def test_ActualRaces():
