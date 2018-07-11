@@ -1,6 +1,7 @@
 
 import sc2common
 
+from sc2common import __version__
 from sc2common import commonUtilFuncs
 from sc2common import constants
 from sc2common import constants_shapes
@@ -10,6 +11,8 @@ from sc2common import types
 
 def test_import():
     assert bool(sc2common)
+    assert sc2common.VERSION
+    assert sc2common.__version__
 
 
 def test_constants():
