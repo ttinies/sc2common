@@ -72,57 +72,6 @@ def convertToMapPic(byteString, mapWidth):
 
 
 ################################################################################
-def objDistanceRectangles(p1, r1, p2, r2):
-    """calculates the minimum distance between two rectangular objects, p1 having
-       x,y distances to edge and p2 have x,y distances to edge from center"""
-    p1Left  = p1.x-r1.x
-    p1Right = p1.x+r1.x
-    p1Bottm = p1.y-r1.y
-    p1Top   = p1.y+r1.y
-    p1BL    = MapPoint(p1Left , p1Bottm)
-    p1BR    = MapPoint(p1Right, p1Bottm)
-    p1TL    = MapPoint(p1Left , p1Top  )
-    p1TR    = MapPoint(p1Right, p1Top  )
-    p2Left  = p2.x-r2.x
-    p2Right = p2.x+r2.x
-    p2Bottm = p2.y-r2.y
-    p2Top   = p2.y+r2.y
-    p2BL    = MapPoint(p2Left , p2Bottm)
-    p2BR    = MapPoint(p2Right, p2Bottm)
-    p2TL    = MapPoint(p2Left , p2Top  )
-    p2TR    = MapPoint(p2Right, p2Top  )
-    if   p1Left  > p2Right and p1Top   >=p2Bottm and p1Bottm <=p2Top  : return p1Left  - p2Right # left   side
-    elif p1Right < p2Left  and p1Top   >=p2Bottm and p1Bottm <=p2Top  : return p2Left  - p1Right # right  side
-    elif p1Top   < p2Bottm and p1Left  <=p2Right and p1Right >=p2Left : return p2Bottm - p1Top   # top    side
-    elif p1Bottm > p2Top   and p1Left  <=p2Right and p1Right >=p2Left : return p1Bottm - p2Top   # bottom side
-    elif p1Right < p2Left  and p1Top   < p2Bottm: return p1TR.direct2dDistance(p2BL) # quadrant I
-    elif p1Right < p2Left  and p1Bottm > p2Top  : return p1BR.direct2dDistance(p2TL) # quadrant IV
-    elif p1Left  > p2Right and p1Bottm > p2Top  : return p1BL.direct2dDistance(p2TR) # quadrant III
-    elif p1Left  > p2Right and p1Top   < p2Bottm: return p1TL.direct2dDistance(p2BR) # quadrant II
-    return 0.0 # otherwise these objects are touching/overlapping
-
-
-################################################################################
-def outsideElipse(target, centerPoint, radX, radY):
-    newX  = (centerPoint.x - target.x)
-    newY  = (centerPoint.y - target.y)
-    radY += 1
-    if newX:
-        theta = math.atan(newY / newX)
-        r = ((radX * math.cos(theta))**2 + (radY * math.sin(theta))**2) ** 0.5
-    else:
-        theta = 999
-        r = radY#abs(newY)
-    if r%1 and r%1 < 0.5:   r = math.ceil(r)-0.5
-    else:                   r = math.ceil(r)
-    dFull = (newX**2 + newY**2) ** 0.5
-    #print("x:%.1f y:%.1f -- theta:%.2f  %.1f >? %.1f"%(newX, newY, theta, dFull, r))
-    if dFull <= r:
-        print("%s   %s > %s"%(target, dFull, r))
-    return dFull > r
-
-
-################################################################################
 def Dumper(obj, indent=0, increase=4, encoding='utf-8'):
     """appropriately view a given dict/list/tuple/object data structure"""
     ##############################################################################
