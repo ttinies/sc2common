@@ -101,9 +101,9 @@ def Dumper(obj, indent=0, increase=4, encoding='utf-8'):
             print("%s%s"%(" "*(indent), p(obj))) # universally convert back to str for printing
         elif obj!=None:
             print("%s%s"%(" "*(indent), p(obj)))
-    except Exception:
+    except Exception as e:
         print(type(obj), obj)
-        raise
+        raise type(e)(str(e))
 
 
 ################################################################################
