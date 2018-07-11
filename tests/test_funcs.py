@@ -104,39 +104,6 @@ def test_convertToMapPic():
     assert x
 
 
-def test_objDistanceRectangles():
-    """parameters: p1, r1, p2, r2"""
-
-
-def test_outsideElipse():
-    """parameters: target, centerPoint, radX, radY"""
-    cX = 23
-    cY = 31
-    rX = 6
-    rY = 6
-    a  = cn.MapPoint(cX, cY)
-    b  = cn.MapPoint( 0,  0)
-    c  = cn.MapPoint(cX-rX, cY-rY)
-    d  = cn.MapPoint(cX+rX, cY-rY)
-    e  = cn.MapPoint(cX-rX, cY+rY)
-    f  = cn.MapPoint(cX+rX, cY+rY)
-    print(cu.outsideElipse(b, a, rX, rY))
-    print(cu.outsideElipse(c, a, rX, rY))
-    print(cu.outsideElipse(d, a, rX, rY))
-    print(cu.outsideElipse(e, a, rX, rY))
-    print(cu.outsideElipse(f, a, rX, rY))
-    print()
-    g  = cn.MapPoint(21, 31)
-    h  = cn.MapPoint(25, 31)
-    i  = cn.MapPoint(23, 29)
-    j  = cn.MapPoint(23, 31)
-    print(cu.outsideElipse(g, a, rX, rY))
-    print(cu.outsideElipse(h, a, rX, rY))
-    print(cu.outsideElipse(i, a, rX, rY))
-    print(cu.outsideElipse(j, a, rX, rY))
-    print()
-
-
 def test_Dumper():
     """parameters: obj, indent=0, increase=2, encoding='utf-8'"""
     cu.Dumper({1:2, 3:4, 5:6})
@@ -166,6 +133,13 @@ def test_Dumper():
     })
     try: # module isn't supported
         cu.Dumper(cu)
+        assert False
+    except Exception:
+        assert True
+    class dummyException(Exception):
+        def __str__(self): raise self("intentionally force an exception")
+    try:
+        cu.Dumper( dummyException() )
         assert False
     except Exception:
         assert True
