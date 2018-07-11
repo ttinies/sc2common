@@ -35,6 +35,8 @@ def test_pySC2protocolObj():
     assert a != b
     assert a.allowAutocast == False
     assert a.allowMinimap  == False
+    print(a)
+    print(b)
 
     
 test_pySC2protocolObj()
