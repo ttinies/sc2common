@@ -21,6 +21,7 @@ def test_pySC2protocolObj():
             return attrName in dir(self)
             
     obj = dummyObj()
+    obj.b = 2
     #obj.
     #attrs = {}
     a = cn.pySC2protocolObj(["a", "b", "c"], sc2protData=obj)
