@@ -19,10 +19,6 @@ requirements:
   run:
     - python
 
-test:
-  imports:
-    - sc2common
-
 about:
   home: {{ data.get('url') }}
   license: {{ data.get('license') }}
