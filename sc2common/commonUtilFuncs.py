@@ -5,7 +5,6 @@ from __future__ import print_function # python 2/3 compatibility
 
 from sc2common.containers import MapPoint
 from sc2common import constants as c
-from builtins import str as text # python 2/3 compatibility
 
 import math
 import os
@@ -20,7 +19,7 @@ def getName(target):
         try:    ret = ret.name
         except AttributeError: break
     #if type(ret) == str: ret = ret.decode('utf-8')
-    return text(ret)
+    return str(ret)
 
 
 ################################################################################
@@ -129,7 +128,7 @@ def Dumper(obj, indent=0, increase=4, encoding='utf-8'):
     ##############################################################################
     def p(given):
         """ensure proper decoding from unicode, if necessary"""
-        if isinstance(given, text): return given.encode(encoding)
+        if isinstance(given, str):  return given.encode(encoding)
         else:                       return given
     ##############################################################################
     try:
@@ -148,7 +147,7 @@ def Dumper(obj, indent=0, increase=4, encoding='utf-8'):
             if len(next) == 1:  next = next[0]
             else:               next = tuple(next)
             Dumper(next, indent=indent+increase, increase=increase)
-        elif isinstance(obj, text):
+        elif isinstance(obj, str):
             print("%s%s"%(" "*(indent), p(obj))) # universally convert back to str for printing
         elif obj!=None:
             print("%s%s"%(" "*(indent), p(obj)))
