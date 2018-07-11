@@ -11,7 +11,32 @@ def test_RestrictedType():
 
 
 def test_pySC2protocolObj():
-    assert True
+    class dummyObj(object):
+        def __iter__(self):
+            #print(dir(self))
+            attrs = [a for a in dir(self) if '__' not in a]
+            print(attrs)
+            return iter(dir(self))
+        def HasField(self, attrName):
+            return attrName in dir(self)
+            
+    obj = dummyObj()
+    #obj.
+    #attrs = {}
+    a = cn.pySC2protocolObj(["a", "b", "c"], sc2protData=obj)
+    assert a
+    assert iter(a)
+    assert 'a' in a
+    assert 'd' not in a
+    b = cn.pySC2protocolObj(a)
+    assert a == b
+    b.c = 1
+    assert a != b
+    assert a.allowAutocast == False
+    assert a.allowMinimap  == False
+
+    
+test_pySC2protocolObj()
 
 
 def test_MultiType():
