@@ -92,7 +92,7 @@ def test_gridSnap():
     a = cu.convertToMapPoint( [1.000001, 4.5     ] )
     b = cu.convertToMapPoint( [1.800000, 2.500001] )
     c = cu.convertToMapPoint( [1.499999, 0.999999] )
-    assert cu.gridSnap(a) == cu.convertToMapPoint([1, 4])
+    assert cu.gridSnap(a) == cu.convertToMapPoint([1, 5])
     assert cu.gridSnap(b) == cu.convertToMapPoint([2, 3])
     assert cu.gridSnap(c) == cu.convertToMapPoint([1, 1])
 
@@ -173,4 +173,3 @@ def test_quadraticSolver():
     assert cu.quadraticSolver( 3, 4, 5) == []
     assert cu.quadraticSolver(-4, 8, 0) == [0.0, 2.0]
     assert cu.quadraticSolver(-5, 0, 5) == [-1.0, 1.0]
-    

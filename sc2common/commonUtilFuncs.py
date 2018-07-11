@@ -50,6 +50,7 @@ def convertToMapPoint(loc):
 def gridSnap(point, grid=1.0):
     """cause the given point to snap to nearest X/Y grid point"""
     def snapFunc(value):
+        value += 0.000001 # ensure values that are close to a half grid value round up
         remainder = value%grid
         value -= remainder
         newAdd = round(remainder/grid)*grid
