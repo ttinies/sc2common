@@ -17,4 +17,5 @@ Nevertheless, this package can also be directly installed by itself.
 
 It is recommended to install this pacakge using [Anaconda](https://conda.io/docs/user-guide/tasks/manage-pkgs.html).  However, installation is alsu supported via [pypi.org](https://pypi.org/project/sc2common/).
 > EXAMPLE: `conda install sc2common`
+
 > EXAMPLE: `pip install sc2common`
