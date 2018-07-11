@@ -54,7 +54,6 @@ def test_funcs():
     assert commonUtilFuncs.convertToMapPoint
     assert commonUtilFuncs.gridSnap
     assert commonUtilFuncs.convertToMapPic
-    assert commonUtilFuncs.outsideElipse
     assert commonUtilFuncs.Dumper
     assert commonUtilFuncs.convertSecondsToLoops
     assert commonUtilFuncs.quadraticEval
