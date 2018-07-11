@@ -96,10 +96,10 @@ setup(
     python_requires=REQUIRES_PYTHON,
     url=URL,
     packages=find_packages(exclude=("tests",)),
-    entry_points={"console_scripts": ["sc2gameLobby=sc2gameLobby.cli:main"]},
+    entry_points={"console_scripts": []},
     install_requires=REQUIRED,
     include_package_data=True,
-    package_data={"sc2gameLobby": "jsonData/versions.json"},
+    package_data={},
     license="Apache License 2.0",
     classifiers=[
         # Trove classifiers
