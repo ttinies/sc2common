@@ -288,7 +288,7 @@ class Vector(MapPoint):
         ret /= scalar
         return ret
     ############################################################################
-    def __div__(self, scalar): return self.__itruediv__(scalar) # python 2.7 support
+    def __idiv__(self, scalar): return self.__itruediv__(scalar) # python 2.7 support
     def __itruediv__(self, scalar):
         self.x /= scalar
         self.y /= scalar
