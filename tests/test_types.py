@@ -76,3 +76,7 @@ def test_GameStates():
 def test_ExpansionNames():
     assert types.ExpansionNames(c.LEGACY_OF_THE_VOID)
 
+
+def test_MatchResult():
+    assert types.MatchResult(c.RESULT_UNDECIDED)
+
