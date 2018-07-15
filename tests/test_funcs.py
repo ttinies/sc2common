@@ -176,7 +176,7 @@ def test_quadraticSolver():
     assert cu.quadraticSolver(-5, 0, 5) == [-1.0, 1.0]
     
 def test_determineRace():
-    race = ActualRaces(c.PROTOSS)
+    race = t.ActualRaces(c.PROTOSS)
     assert cu.determineRace(race)   == c.PROTOSS
     assert cu.determineRace(1)      == c.PROTOSS
     assert cu.determineRace(2)      == c.TERRAN
