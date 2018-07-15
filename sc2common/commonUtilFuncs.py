@@ -3,12 +3,31 @@ from __future__ import absolute_import
 from __future__ import division       # python 2/3 compatibility
 from __future__ import print_function # python 2/3 compatibility
 
-from sc2common.containers import MapPoint
+from s2clientprotocol import common_pb2
+
+from sc2common.containers import MapPoint, RestrictedType
 from sc2common import constants as c
 
 import math
 import os
 import re
+
+
+################################################################################
+def determineRace(value):
+    if   isinstance(value, RestrictedType):                  return value.type
+    elif isinstance(value, int):
+        if   value == common_pb2.Terran:                     return c.PROTOSS
+        elif value == common_pb2.Zerg:                       return c.TERRAN
+        elif value == common_pb2.Protoss:                    return c.ZERG
+        elif value == common_pb2.Random:                     return c.RANDOM
+    elif isinstance(value, str):
+        if   re.search("^prot", value, flags=re.IGNORECASE): return c.PROTOSS
+        elif re.search("^terr", value, flags=re.IGNORECASE): return c.TERRAN
+        elif re.search("^zerg", value, flags=re.IGNORECASE): return c.ZERG
+        elif re.search("^rand", value, flags=re.IGNORECASE): return c.RANDOM
+    raise ValueError("could not determine how to convert '%s' into a race "
+                     "value"%(value))
 
 
 ################################################################################
