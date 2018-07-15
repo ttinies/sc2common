@@ -3,6 +3,7 @@ from __future__ import print_function # python 2/3 compatibility
 
 from sc2common import commonUtilFuncs as cu
 from sc2common import containers as cn
+from sc2common import types as t
 
 
 def test_getName():
@@ -174,3 +175,19 @@ def test_quadraticSolver():
     assert cu.quadraticSolver(-4, 8, 0) == [0.0, 2.0]
     assert cu.quadraticSolver(-5, 0, 5) == [-1.0, 1.0]
     
+def test_determineRace():
+    race = ActualRaces(c.PROTOSS)
+    assert cu.determineRace(race)   == c.PROTOSS
+    assert cu.determineRace(1)      == c.PROTOSS
+    assert cu.determineRace(2)      == c.TERRAN
+    assert cu.determineRace(3)      == c.ZERG
+    assert cu.determineRace(4)      == c.RANDOM
+    assert cu.determineRace("prot") == c.PROTOSS
+    assert cu.determineRace("terr") == c.TERRAN
+    assert cu.determineRace("zerg") == c.ZERG
+    assert cu.determineRace("rand") == c.RANDOM
+    try:
+        cu.determineRace(1)
+        assert False
+    except ValueError:
+        assert True
