@@ -188,7 +188,7 @@ def test_determineRace():
     assert cu.determineRace("zerg") == c.ZERG
     assert cu.determineRace("rand") == c.RANDOM
     try:
-        cu.determineRace(1)
+        cu.determineRace(0)
         assert False
     except ValueError:
         assert True
