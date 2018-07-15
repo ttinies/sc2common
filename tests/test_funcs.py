@@ -1,6 +1,7 @@
 
 from __future__ import print_function # python 2/3 compatibility
 
+from sc2common import constants as c
 from sc2common import commonUtilFuncs as cu
 from sc2common import containers as cn
 from sc2common import types as t
