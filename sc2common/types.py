@@ -106,3 +106,17 @@ class ExpansionNames(RestrictedType):
         c.LEGACY_OF_THE_VOID                ,
     ]
 
+
+
+
+################################################################################
+class MatchResult(RestrictedType):
+    """the possible outcomes from a Starcraft 2 match for a player"""
+    ALLOWED_TYPES = {
+        "victory"       : c.RESULT_VICTORY,
+        "defeat"        : c.RESULT_DEFEAT,
+        "tie"           : c.RESULT_TIE,
+        "undecided"     : c.RESULT_UNDECIDED,
+        "crash"         : c.RESULT_CRASH,
+        "disconnect"    : c.RESULT_DISCONNECT,
+    }
