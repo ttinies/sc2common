@@ -27,10 +27,16 @@ class RestrictedType(object):
         if key != "type":
             raise KeyError("given key '%s' is not allowed.  Expected: 'type'"%(key))
         if value not in type(self).ALLOWED_TYPES:
-            result = [k for k,v in iteritems(type(self).ALLOWED_TYPES) if value == v]
-            if len(result) != 1:
+            if isinstance(type(self).ALLOWED_TYPES, dict):
+                result = [k for k,v in iteritems(type(self).ALLOWED_TYPES) if value == v]
+            else:
+                result = []
+            if len(result) == 0:
                 raise ValueError("given value '%s' (%s) is not an player type value."\
                     "Allowed: %s"%(value, type(value), list(type(self).ALLOWED_TYPES)))
+            elif len(result) > 1:
+                raise ValueError("given value '%s' (%s) defined too many matching "\
+                    "values: %s"%(value, type(value), list(type(self).ALLOWED_TYPES)))
             value = result.pop() # allow use the key value, not the value-value (yay wording)
         super(RestrictedType, self).__setattr__(key, value)
     ############################################################################
