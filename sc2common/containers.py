@@ -32,7 +32,7 @@ class RestrictedType(object):
             else:
                 result = []
             if len(result) == 0:
-                raise ValueError("given value '%s' (%s) is not an player type value."\
+                raise ValueError("given value '%s' (%s) is not a player type value."\
                     "Allowed: %s"%(value, type(value), list(type(self).ALLOWED_TYPES)))
             elif len(result) > 1:
                 raise ValueError("given value '%s' (%s) defined too many matching "\
