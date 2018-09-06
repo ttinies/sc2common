@@ -3,6 +3,8 @@ from __future__ import absolute_import
 from __future__ import division       # python 2/3 compatibility
 from __future__ import print_function # python 2/3 compatibility
 
+from pathlib import Path
+import platform
 
 from s2clientprotocol import data_pb2
 from s2clientprotocol import sc2api_pb2
@@ -10,6 +12,14 @@ from s2clientprotocol import sc2api_pb2
 import sc2common.containers as cn
 import os
 
+################################################################################
+# machine-specific paths
+PLATFORM      = platform.system()
+USER_HOME_DIR = str(Path.home())
+PATH_SC2_DATA = {
+    "Darwin"  : USER_HOME_DIR + "/Library/Application Support/Blizzard/StarCraft II/stableid.json",
+    "Windows" : USER_HOME_DIR + "/Documents/StarCraft II/stableid.json"
+}
 ################################################################################
 # game expansions
 WINGS_OF_LIBERTY        = "Wings_Of_Liberty"
