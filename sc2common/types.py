@@ -107,8 +107,6 @@ class ExpansionNames(RestrictedType):
     ]
 
 
-
-
 ################################################################################
 class MatchResult(RestrictedType):
     """the possible outcomes from a Starcraft 2 match for a player"""
@@ -120,3 +118,4 @@ class MatchResult(RestrictedType):
         "crash"         : c.RESULT_CRASH,
         "disconnect"    : c.RESULT_DISCONNECT,
     }
+
