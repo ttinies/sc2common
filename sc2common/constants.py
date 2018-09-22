@@ -145,4 +145,11 @@ GAME_STOP               = "stop"
 ################################################################################
 # unit properties
 INVULNERABLE_HEALTH     = 10000
-
+################################################################################
+# official file/extension values
+SC2_BANK_EXT            = "SC2Bank"
+SC2_MAP_EXT             = "SC2Map"
+SC2_MOD_EXT             = "SC2Mod"
+SC2_REPLAY_EXT          = "SC2Replay"
+################################################################################
+PATH_NEW_MATCH_DATA     = ""
