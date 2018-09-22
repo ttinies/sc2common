@@ -380,6 +380,6 @@ class Cost(object):
     def __str__(self): return self.__repr__()
     def __repr__(self):
         name = self.__class__.__name__
-        return "<%s %dmin %dgas %dsupply %denergy %dloops %dCD>"%(
+        return "<%s %dmin %dgas %.1fsupply %denergy %dloops %dCD>"%(
             name, self.mineral, self.vespene, self.supply, self.energy, self.time, self.cooldown)
 
