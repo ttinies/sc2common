@@ -17,7 +17,7 @@ DESCRIPTION = "Basic definitions for various SC2 game components."
 URL = "https://github.com/ttinies/sc2common"
 EMAIL = "help.fool@versentiedge.com"
 AUTHOR = "Versentiedge LLC"
-REQUIRES_PYTHON = ">2.6"
+REQUIRES_PYTHON = ">3.4"
 VERSION = None
 
 # What packages are required for this module to be executed?
