@@ -186,11 +186,11 @@ def test_Cost():
     assert int(c2)
     assert int(c3)
     assert int(c4)
-    assert str(c2) == "<Cost 50min 50gas 3supply 0energy 100loops 1CD>"
+    assert str(c2) == "<Cost 50min 50gas 3.0supply 0energy 100loops 1CD>"
     c6 = c1 - c2 + c5 + c5
-    assert str(c6) == "<Cost 50min 100gas 1supply 5energy 300loops 7CD>"
+    assert str(c6) == "<Cost 50min 100gas 1.0supply 5energy 300loops 7CD>"
     c6 -= c1
-    assert str(c6) == "<Cost 0min 0gas -1supply 4energy 0loops 5CD>"
+    assert str(c6) == "<Cost 0min 0gas -1.0supply 4energy 0loops 5CD>"
     c2 += c5
-    assert str(c2) == "<Cost 75min 75gas 4supply 2energy 150loops 4CD>"
+    assert str(c2) == "<Cost 75min 75gas 4.0supply 2energy 150loops 4CD>"
 
