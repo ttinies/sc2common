@@ -152,4 +152,4 @@ SC2_MAP_EXT             = "SC2Map"
 SC2_MOD_EXT             = "SC2Mod"
 SC2_REPLAY_EXT          = "SC2Replay"
 ################################################################################
-PATH_NEW_MATCH_DATA     = ""
+PATH_NEW_MATCH_DATA     = "."
