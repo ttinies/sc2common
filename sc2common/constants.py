@@ -112,6 +112,11 @@ LOOP_135_MS             = 3
 LOOP_090_MS             = 2
 LOOP_045_MS             = 1
 ################################################################################
+# alert types
+NUKE                    = cn.MultiType("NuclearLaunchDetected"   , sc2api_pb2.NuclearLaunchDetected )
+NYDUS                   = cn.MultiType("NydusWormDetected"       , sc2api_pb2.NydusWormDetected     )
+ALERT_NAMES = [NUKE, NYDUS]
+################################################################################
 # starcraft2 in-game resource mechanics
 #TIME_MINERAL            = LOOP_01_SEC # loops required to complete harvesting
 #TIME_MINERAL_RICH       = LOOP_01_SEC # loops required to complete harvesting
