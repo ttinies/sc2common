@@ -315,6 +315,7 @@ class Cost(object):
             self.time       = mins.time
             self.cooldown   = mins.cooldown
         else:
+            if mins == None:  mins = 0 # passing an undefined Cost shouldn't break this object's functionality
             self.mineral    = mins     # the amount of minerals expended to activate the action
             self.vespene    = gas      # the amount of vespene expended to activate the action
             self.supply     = supply   # the amount of supply consumed
@@ -325,6 +326,7 @@ class Cost(object):
         #self.constraintUnits    = [] # all of these required units must be available to activate
     ############################################################################
     def __eq__(self, otherCost):
+        if not isinstance(otherCost, Cost):  return False
         return  self.mineral  == otherCost.mineral  and \
                 self.vespene  == otherCost.vespene  and \
                 self.supply   == otherCost.supply   and \
@@ -381,5 +383,6 @@ class Cost(object):
     def __repr__(self):
         name = self.__class__.__name__
         return "<%s %dmin %dgas %.1fsupply %denergy %dloops %dCD>"%(
-            name, self.mineral, self.vespene, self.supply, self.energy, self.time, self.cooldown)
+            name, self.mineral, self.vespene, self.supply, self.energy,
+            self.time, self.cooldown)
 
