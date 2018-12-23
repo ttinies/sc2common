@@ -42,7 +42,7 @@ class ComputerDifficulties(RestrictedType):
         c.CHEATVISION   : sc_pb.CheatVision ,
         c.CHEATMONEY    : sc_pb.CheatMoney  ,
         c.CHEATINSANE   : sc_pb.CheatInsane ,
-        None            : None              ,
+        None            : None              , # difficulty isn't valid
     }
 
 
@@ -118,4 +118,25 @@ class MatchResult(RestrictedType):
         "crash"         : c.RESULT_CRASH,
         "disconnect"    : c.RESULT_DISCONNECT,
     }
+
+
+################################################################################
+class PlayerRelations(RestrictedType):
+    """the possible relationships a player can have with another player"""
+    ALLOWED_TYPES = [
+        c.RELATION_SELF,
+        c.RELATION_ALLY,
+        c.RELATION_NEUTRAL,
+        c.RELATION_ENEMY,
+    ]
+
+
+################################################################################
+class CloakStates(RestrictedType):
+    """the possible cloak states a unit can manifest"""
+    ALLOWED_TYPES = [
+        c.CLOAKED,
+        c.CLOAKED_DETECTED,
+        c.NOT_CLOAKED,
+    ]
 
