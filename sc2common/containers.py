@@ -47,6 +47,9 @@ class RestrictedType(object):
     ############################################################################
     def __eq__(self, other):
         if isinstance(other, RestrictedType):
+            if isinstance( self.type, MultiType) and \
+               isinstance(other.type, MultiType):
+                    return self.type.name == other.type.name
             return self.type == other.type
         return self.type == other
     def __ne__(self, other):
