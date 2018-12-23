@@ -53,7 +53,7 @@ PARTICIPANT = "agent"
 HUMAN       = "human"   # human agent that plays the game in traditional manner
 BOT         = "bot"     # agent with pre-programmed actions/responses/decisions
 AI          = "ai"      # agent with decision making based on machine-learning policies
-ARCHON      = "archon"  # multiple players simultaneously playing as the same player 
+ARCHON      = "archon"  # multiple players simultaneously playing as the same player
 ################################################################################
 # Races
 PROTOSS     = "protoss"
@@ -61,6 +61,12 @@ ZERG        = "zerg"
 TERRAN      = "terran"
 NEUTRAL     = "neutral" # NPC only, non-controllable by any (e.g. map features)
 RANDOM      = "random"  # only valid as a selection race, not an actual race
+################################################################################
+# player relationships
+RELATION_SELF           = cn.MultiType("Self"   , 1) # the relation between self and the player is the player is itself
+RELATION_ALLY           = cn.MultiType("Ally"   , 2) # the relation between self and the player is the player is allied
+RELATION_NEUTRAL        = cn.MultiType("Neutral", 3) # the relation between self and the player is the player is neutral
+RELATION_ENEMY          = cn.MultiType("Enemy"  , 4) # the relation between self and the player is the player is a foe
 ################################################################################
 # starcraft2 game mechanics (immutable, defined by the game/version itself)
 SPEED_FASTER            = 22.4
@@ -150,6 +156,14 @@ GAME_STOP               = "stop"
 ################################################################################
 # unit properties
 INVULNERABLE_HEALTH     = 10000
+BUFF_CARRY_MINERALS     = { 271,  # CarryMineralFieldMinerals
+                            272 } # CarryHighYieldMineralFieldMinerals
+BUFF_CARRY_VESEPENE     = { 273,  # CarryHarvestableVespeneGeyserGas
+                            274,  # CarryHarvestableVespeneGeyserGasProtoss
+                            275 } # CarryHarvestableVespeneGeyserGasZerg
+CLOAKED                 = cn.MultiType("Cloaked"        ,  1) # Cloak States
+CLOAKED_DETECTED        = cn.MultiType("CloakedDetected",  2)
+NOT_CLOAKED             = cn.MultiType("NotCloaked"     ,  3)
 ################################################################################
 # official file/extension values
 SC2_BANK_EXT            = "SC2Bank"
