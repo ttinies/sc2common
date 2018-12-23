@@ -58,12 +58,94 @@ def test_ComputerDifficulties():
 
 
 def test_ActualRaces():
+    def case(a, b, compare):
+        print(a, b, compare)
+        if   compare < 0:   assert a < b
+        elif compare > 0:   assert a > b
+        else:               assert a == b
     assert types.ActualRaces(c.ZERG)
+    case(types.ActualRaces(None     ), types.ActualRaces(c.TERRAN ), -1)
+    case(types.ActualRaces(None     ), types.ActualRaces(c.ZERG   ), -1)
+    case(types.ActualRaces(None     ), types.ActualRaces(c.PROTOSS), -1)
+    case(types.ActualRaces(None     ), types.ActualRaces(None     ),  0)
+    case(types.ActualRaces(c.TERRAN ), types.ActualRaces(c.TERRAN ),  0)
+    case(types.ActualRaces(c.TERRAN ), types.ActualRaces(c.ZERG   ), -1)
+    case(types.ActualRaces(c.TERRAN ), types.ActualRaces(c.PROTOSS), -1)
+    case(types.ActualRaces(c.TERRAN ), types.ActualRaces(None     ),  1)
+    case(types.ActualRaces(c.ZERG   ), types.ActualRaces(c.TERRAN ),  1)
+    case(types.ActualRaces(c.ZERG   ), types.ActualRaces(c.ZERG   ),  0)
+    case(types.ActualRaces(c.ZERG   ), types.ActualRaces(c.PROTOSS), -1)
+    case(types.ActualRaces(c.ZERG   ), types.ActualRaces(None     ),  1)
+    case(types.ActualRaces(c.PROTOSS), types.ActualRaces(c.TERRAN ),  1)
+    case(types.ActualRaces(c.PROTOSS), types.ActualRaces(c.ZERG   ),  1)
+    case(types.ActualRaces(c.PROTOSS), types.ActualRaces(c.PROTOSS),  0)
+    case(types.ActualRaces(c.PROTOSS), types.ActualRaces(None     ),  1)
 
 
 def test_SelectRaces():
+    def case(a, b, compare):
+        print(a, b, compare)
+        if   compare < 0:   assert a < b
+        elif compare > 0:   assert a > b
+        else:               assert a == b
     assert types.SelectRaces(c.RANDOM)
+    case(types.SelectRaces(c.TERRAN ), types.SelectRaces(c.TERRAN ),  0)
+    case(types.SelectRaces(c.TERRAN ), types.SelectRaces(c.ZERG   ), -1)
+    case(types.SelectRaces(c.TERRAN ), types.SelectRaces(c.PROTOSS), -1)
+    case(types.SelectRaces(c.TERRAN ), types.SelectRaces(c.RANDOM ), -1)
+    case(types.SelectRaces(c.ZERG   ), types.SelectRaces(c.TERRAN ),  1)
+    case(types.SelectRaces(c.ZERG   ), types.SelectRaces(c.ZERG   ),  0)
+    case(types.SelectRaces(c.ZERG   ), types.SelectRaces(c.PROTOSS), -1)
+    case(types.SelectRaces(c.ZERG   ), types.SelectRaces(c.RANDOM ), -1)
+    case(types.SelectRaces(c.PROTOSS), types.SelectRaces(c.TERRAN ),  1)
+    case(types.SelectRaces(c.PROTOSS), types.SelectRaces(c.ZERG   ),  1)
+    case(types.SelectRaces(c.PROTOSS), types.SelectRaces(c.PROTOSS),  0)
+    case(types.SelectRaces(c.PROTOSS), types.SelectRaces(c.RANDOM ), -1)
+    case(types.SelectRaces(c.RANDOM ), types.SelectRaces(c.TERRAN ),  1)
+    case(types.SelectRaces(c.RANDOM ), types.SelectRaces(c.ZERG   ),  1)
+    case(types.SelectRaces(c.RANDOM ), types.SelectRaces(c.PROTOSS),  1)
+    case(types.SelectRaces(c.RANDOM ), types.SelectRaces(c.RANDOM ),  0)
 
+
+def test_CrossRaces():
+    def case(a, b, compare):
+        print(a, b, compare)
+        if   compare < 0:   assert a < b
+        elif compare > 0:   assert a > b
+        else:               assert a == b
+    case(types.ActualRaces(None     ), types.SelectRaces(c.TERRAN ), -1)
+    case(types.ActualRaces(None     ), types.SelectRaces(c.ZERG   ), -1)
+    case(types.ActualRaces(None     ), types.SelectRaces(c.PROTOSS), -1)
+    case(types.ActualRaces(None     ), types.SelectRaces(c.RANDOM ), -1)
+    case(types.ActualRaces(c.TERRAN ), types.SelectRaces(c.TERRAN ),  0)
+    case(types.ActualRaces(c.TERRAN ), types.SelectRaces(c.ZERG   ), -1)
+    case(types.ActualRaces(c.TERRAN ), types.SelectRaces(c.PROTOSS), -1)
+    case(types.ActualRaces(c.TERRAN ), types.SelectRaces(c.RANDOM ), -1)
+    case(types.ActualRaces(c.ZERG   ), types.SelectRaces(c.TERRAN ),  1)
+    case(types.ActualRaces(c.ZERG   ), types.SelectRaces(c.ZERG   ),  0)
+    case(types.ActualRaces(c.ZERG   ), types.SelectRaces(c.PROTOSS), -1)
+    case(types.ActualRaces(c.ZERG   ), types.SelectRaces(c.RANDOM ), -1)
+    case(types.ActualRaces(c.PROTOSS), types.SelectRaces(c.TERRAN ),  1)
+    case(types.ActualRaces(c.PROTOSS), types.SelectRaces(c.ZERG   ),  1)
+    case(types.ActualRaces(c.PROTOSS), types.SelectRaces(c.PROTOSS),  0)
+    case(types.ActualRaces(c.PROTOSS), types.SelectRaces(c.RANDOM ), -1)
+    case(types.SelectRaces(c.TERRAN ), types.ActualRaces(c.TERRAN ),  0)
+    case(types.SelectRaces(c.TERRAN ), types.ActualRaces(c.ZERG   ), -1)
+    case(types.SelectRaces(c.TERRAN ), types.ActualRaces(c.PROTOSS), -1)
+    case(types.SelectRaces(c.TERRAN ), types.ActualRaces(None     ),  1)
+    case(types.SelectRaces(c.ZERG   ), types.ActualRaces(c.TERRAN ),  1)
+    case(types.SelectRaces(c.ZERG   ), types.ActualRaces(c.ZERG   ),  0)
+    case(types.SelectRaces(c.ZERG   ), types.ActualRaces(c.PROTOSS), -1)
+    case(types.SelectRaces(c.ZERG   ), types.ActualRaces(None     ),  1)
+    case(types.SelectRaces(c.PROTOSS), types.ActualRaces(c.TERRAN ),  1)
+    case(types.SelectRaces(c.PROTOSS), types.ActualRaces(c.ZERG   ),  1)
+    case(types.SelectRaces(c.PROTOSS), types.ActualRaces(c.PROTOSS),  0)
+    case(types.SelectRaces(c.PROTOSS), types.ActualRaces(None     ),  1)
+    case(types.SelectRaces(c.RANDOM ), types.ActualRaces(c.TERRAN ),  1)
+    case(types.SelectRaces(c.RANDOM ), types.ActualRaces(c.ZERG   ),  1)
+    case(types.SelectRaces(c.RANDOM ), types.ActualRaces(c.PROTOSS),  1)
+    case(types.SelectRaces(c.RANDOM ), types.ActualRaces(None     ),  1)
+    
 
 def test_GameModes():
     assert types.GameModes(c.MODE_1V1)
