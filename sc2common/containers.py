@@ -72,11 +72,11 @@ class RestrictedType(object):
         return self.type
     ############################################################################
     def gameValue(self):
-        """identify the correpsonding internal SC2 game value for self.type's value""" 
-        try:
-            return (type(self).ALLOWED_TYPES)[self.type]
-        except Exception: pass
-        return None # if ALLOWED_TYPES is not a dict, there is no-internal game value mapping defined
+        """identify the correpsonding internal SC2 game value for self.type's value"""
+        allowed = type(self).ALLOWED_TYPES
+        if isinstance(allowed, dict): # if ALLOWED_TYPES is not a dict, there is no-internal game value mapping defined
+            return allowed.get(self.type.name)
+        return None
 
 
 ################################################################################
