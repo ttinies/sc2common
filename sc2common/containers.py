@@ -32,15 +32,16 @@ class RestrictedType(object):
             return
         result = []
         if isinstance(allowed, dict):
-            result = [MultiType(k, v) for k, v in iteritems(allowed) \
-                        if value == k or value == v]
+            for k, v in iteritems(allowed):
+                if value != k and value != v: continue
+                result.append(MultiType(k, v))
         elif isinstance(allowed, list):
             result = [v for v in allowed if value == v]
         if len(result) == 0:
-            raise ValueError("given value '%s' (%s) is not a player type value"\
-                ".  Allowed: %s"%(value, type(value), list(allowed)))
+            raise ValueError("given value '%s' %s is not a %s value.  Allowed:"\
+                "%s"%(value, type(value), type(self), list(allowed)))
         elif len(result) > 1:
-            raise ValueError("given value '%s' (%s) defined too many matching "\
+            raise ValueError("given value '%s' %s defined too many matching "\
                 "values: %s"%(value, type(value), result))
         value = result.pop() # allow use the key value, not the value-value (yay wording)
         super(RestrictedType, self).__setattr__(key, value)
@@ -56,8 +57,10 @@ class RestrictedType(object):
         return not (self == other)
     def __lt__(self, other):
         """allow basic sorting"""
-        thisValue = self.gameValue()
-        othrValue = other.gameValue()
+        if isinstance(self.type, MultiType):    thisValue = self.type.code
+        else:                                   thisValue = self.gameValue()
+        if isinstance(other.type, MultiType):   othrValue = other.type.code
+        else:                                   othrValue = other.gameValue()
         if othrValue == None: return False
         if thisValue == None: return True
         return thisValue < othrValue
@@ -74,8 +77,10 @@ class RestrictedType(object):
     def gameValue(self):
         """identify the correpsonding internal SC2 game value for self.type's value"""
         allowed = type(self).ALLOWED_TYPES
-        if isinstance(allowed, dict): # if ALLOWED_TYPES is not a dict, there is no-internal game value mapping defined
-            return allowed.get(self.type.name)
+        try:
+            if isinstance(allowed, dict): # if ALLOWED_TYPES is not a dict, there is no-internal game value mapping defined
+                return allowed.get(self.type.name)
+        except: pass # None .type values are okay -- such result in a None gameValue() result
         return None
 
 
