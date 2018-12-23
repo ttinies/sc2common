@@ -56,7 +56,11 @@ class RestrictedType(object):
         return not (self == other)
     def __lt__(self, other):
         """allow basic sorting"""
-        return self.gameValue() < other.gameValue()
+        thisValue = self.gameValue()
+        othrValue = other.gameValue()
+        if othrValue == None: return False
+        if thisValue == None: return True
+        return thisValue < othrValue
     ############################################################################
     def __str__(self): return self.__repr__()
     def __repr__(self):
