@@ -31,6 +31,13 @@ def determineRace(value):
 
 
 ################################################################################
+def isPlayerSelf(playerValue):      return playerValue == c.RELATION_SELF
+def isPlayerAlly(playerValue):      return playerValue == c.RELATION_ALLY
+def isPlayerNeutral(playerValue):   return playerValue == c.RELATION_NEUTRAL
+def isPlayerEnemy(playerValue):     return playerValue == c.RELATION_ENEMY
+
+
+################################################################################
 def getName(target):
     ret = target
     #while type(target) not in [str,unicode]: # keep getting more and more names until a str name is retrieved
