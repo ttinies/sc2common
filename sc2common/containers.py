@@ -26,24 +26,29 @@ class RestrictedType(object):
         """specifically restrict key and value as defined by ALLOWED_TYPES"""
         if key != "type":
             raise KeyError("given key '%s' is not allowed.  Expected: 'type'"%(key))
-        if value not in type(self).ALLOWED_TYPES:
-            if isinstance(type(self).ALLOWED_TYPES, dict):
-                result = [k for k,v in iteritems(type(self).ALLOWED_TYPES) if value == v]
-            else:
-                result = []
-            if len(result) == 0:
-                raise ValueError("given value '%s' (%s) is not a player type value."\
-                    "Allowed: %s"%(value, type(value), list(type(self).ALLOWED_TYPES)))
-            elif len(result) > 1:
-                raise ValueError("given value '%s' (%s) defined too many matching "\
-                    "values: %s"%(value, type(value), list(type(self).ALLOWED_TYPES)))
-            value = result.pop() # allow use the key value, not the value-value (yay wording)
+        allowed = type(self).ALLOWED_TYPES
+        if value == None and value in allowed: # if this type allows a 'None' value, it means the value is not yet defined
+            super(RestrictedType, self).__setattr__(key, value)
+            return
+        result = []
+        if isinstance(allowed, dict):
+            result = [MultiType(k, v) for k, v in iteritems(allowed) \
+                        if value == k or value == v]
+        elif isinstance(allowed, list):
+            result = [v for v in allowed if value == v]
+        if len(result) == 0:
+            raise ValueError("given value '%s' (%s) is not a player type value"\
+                ".  Allowed: %s"%(value, type(value), list(allowed)))
+        elif len(result) > 1:
+            raise ValueError("given value '%s' (%s) defined too many matching "\
+                "values: %s"%(value, type(value), result))
+        value = result.pop() # allow use the key value, not the value-value (yay wording)
         super(RestrictedType, self).__setattr__(key, value)
     ############################################################################
     def __eq__(self, other):
-        if self.type == other:                      return True
-        if not isinstance(other, RestrictedType):   return False
-        return self.type == other.type
+        if isinstance(other, RestrictedType):
+            return self.type == other.type
+        return self.type == other
     def __ne__(self, other):
         return not (self == other)
     def __lt__(self, other):
