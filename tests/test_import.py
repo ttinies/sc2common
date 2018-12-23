@@ -7,6 +7,7 @@ from sc2common import constants
 from sc2common import constants_shapes
 from sc2common import containers
 from sc2common import types
+from sc2common import variables
 
 
 def test_import():
@@ -58,4 +59,10 @@ def test_funcs():
     assert commonUtilFuncs.convertSecondsToLoops
     assert commonUtilFuncs.quadraticEval
     assert commonUtilFuncs.quadraticSolver
+
+
+def test_variables():
+    assert variables
+    variables.gameloop
+    variables.gameloopDelta
 
