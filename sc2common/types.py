@@ -140,3 +140,12 @@ class CloakStates(RestrictedType):
         c.NOT_CLOAKED,
     ]
 
+
+################################################################################
+class Alerts(RestrictedType):
+    """the possible in-game alerts that can be generated"""
+    ALLOWED_TYPES = [
+        c.NUKE,
+        c.NYDUS,
+    ]
+
