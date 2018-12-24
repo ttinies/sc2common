@@ -53,16 +53,27 @@ class RestrictedType(object):
                     return self.type.name == other.type.name
             return self.type == other.type
         return self.type == other
+    ############################################################################
     def __ne__(self, other):
         return not (self == other)
+    ############################################################################
+    def __gt__(self, other):
+        if self <  other:   return False
+        if self == other:   return False
+        return True
+    ############################################################################
     def __lt__(self, other):
-        """allow basic sorting"""
-        if isinstance(self.type, MultiType):    thisValue = self.type.code
+        """allow sorting"""
+        try:
+            if not isinstance(other, RestrictedType):
+                other = type(self)(other)
+        except:  return False
+        if   isinstance(self.type, MultiType):  thisValue = self.type
         else:                                   thisValue = self.gameValue()
-        if isinstance(other.type, MultiType):   othrValue = other.type.code
+        if   isinstance(other, MultiType):      othrValue = other.type
         else:                                   othrValue = other.gameValue()
-        if othrValue == None: return False
-        if thisValue == None: return True
+        if othrValue == None:   return False # anything is always more than None
+        if thisValue == None:   return True # None is always less than anything
         return thisValue < othrValue
     ############################################################################
     def __str__(self): return self.__repr__()
@@ -153,7 +164,9 @@ class MultiType(object):
     ############################################################################
     def __lt__(self, other):
         """allow basic sorting"""
-        return self.code < other.code
+        if   other == None:                 return False
+        elif isinstance(other, MultiType):  return self.code < other.code
+        else:                               return self.code < other
     ############################################################################
     def __int__(self):
         """allow automatic conversion to code when necessary"""
