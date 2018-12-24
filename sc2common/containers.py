@@ -64,10 +64,8 @@ class RestrictedType(object):
     ############################################################################
     def __lt__(self, other):
         """allow sorting"""
-        try:
-            if not isinstance(other, RestrictedType):
-                other = type(self)(other)
-        except:  return False
+        if not isinstance(other, RestrictedType):
+            other = type(self)(other)
         if   isinstance(self.type, MultiType):  thisValue = self.type
         else:                                   thisValue = self.gameValue()
         if   isinstance(other, MultiType):      othrValue = other.type
